@@ -21,9 +21,9 @@ https://docs.google.com/document/d/1W8jNu3JnWYxae4NawsWreSGE7zs020SjfovWJDKLTsQ/
 
 프로젝트를 실행시키기 위하여 다운받아야 하는 라이브러리
 
-'''
+```
 pip install pygame
-'''
+```
 
 ## Authors
 
