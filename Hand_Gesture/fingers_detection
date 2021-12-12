@@ -19,17 +19,12 @@ def my_score():
         score += 10
         result += 1
           
-
-image = cv2.imread("image01.jpg",cv2.IMREAD_ANYCOLOR)
-cv2.imshow("question",image)
-
 #capturing the video 
 cap = cv2.VideoCapture(0)
 
 finger_one()
 
-
-while(cap.isOpend()):
+while(cap.isOpened()):
     try:             
         ret, hand = cap.read()
         hand=cv2.flip(hand,1)
@@ -85,6 +80,8 @@ while(cap.isOpend()):
                 start = tuple(cnt[s][0])
                 end = tuple(cnt[e][0])
                 far = tuple(cnt[f][0])
+                cv2.circle(img,far,5,[0,0,255],-1)
+                cv2.line(img,start,end,[255,0,0],2)
                 a = math.sqrt((end[0] - start[0])**2 + (end[1] - start[1])**2)
                 b = math.sqrt((far[0] - start[0])**2 + (far[1] - start[1])**2)
                 c = math.sqrt((end[0] - far[0])**2 + (end[1] - far[1])**2)
@@ -92,9 +89,6 @@ while(cap.isOpend()):
                 angle = math.acos((b**2 + c**2 - a**2)/(2*b*c)) * 57.295
                 if angle <= 90:
                     count_defects += 1
-
-                cv2.circle(img,far,5,[0,0,255],-1)
-                cv2.line(img,start,end,[255,0,0],2)
 
             # hand gestures and display the result 
             font = cv2.FONT_HERSHEY_SIMPLEX
@@ -149,8 +143,8 @@ while(cap.isOpend()):
 
     except:
         pass
-    k = cv2.waitkey(250) & 0xFF
-    if k == 27:
+    K = cv2.waitkey(250) & 0xFF
+    if K == 27:
         break
 
 cap.release()
