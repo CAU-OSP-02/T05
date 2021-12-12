@@ -4,30 +4,54 @@ import math
 from PIL import Image
 
 #전역변수선언 
-result = 1
+result = 0
 score = 0
 
 #함수선언
-def finger_one():
-    global result
-    return result
-
 def my_score():
     global score
     global result
     if result == myanswer:
-        score += 10
-        result += 1
-          
+        score += 100
+
 
 image = cv2.imread("image01.jpg",cv2.IMREAD_ANYCOLOR)
-#cv2.imshow("question",image)
+cv2.imshow("question",image)
+
+def img1():
+    result = 1
+
+def img2():
+    result = 2
+
+def img3():
+    result = 3
+
+def img4():
+    result = 4
+
+def img5():
+    result = 5
+
+def img6():
+    result = 6
+
+def img7():
+    result = 7
+
+def img8():
+    result = 8
+
+def img9():
+    result = 9
+
+def img10():
+    result = 10
+
+img1()
 
 #capturing the video 
 cap = cv2.VideoCapture(0)
-
-finger_one()
-
 
 while(cap.isOpened()):
     try:             
@@ -85,6 +109,8 @@ while(cap.isOpened()):
                 start = tuple(cnt[s][0])
                 end = tuple(cnt[e][0])
                 far = tuple(cnt[f][0])
+                cv2.circle(img,far,5,[0,0,255],-1)
+                cv2.line(img,start,end,[255,0,0],2)
                 a = math.sqrt((end[0] - start[0])**2 + (end[1] - start[1])**2)
                 b = math.sqrt((far[0] - start[0])**2 + (far[1] - start[1])**2)
                 c = math.sqrt((end[0] - far[0])**2 + (end[1] - far[1])**2)
@@ -93,9 +119,6 @@ while(cap.isOpened()):
                 if angle <= 90:
                     count_defects += 1
                     print("angle:",count_defects)
-
-                cv2.circle(img,far,5,[0,0,255],-1)
-                cv2.line(img,start,end,[255,0,0],2)
 
             # hand gestures and display the result 
             font = cv2.FONT_HERSHEY_SIMPLEX
@@ -149,8 +172,13 @@ while(cap.isOpened()):
 
     except:
         pass
+
     k = cv2.waitKey(250) & 0xFF
     if k == 27:
+
+    K = cv2.waitkey(250) & 0xFF
+    if K == 27:
+
         break
 
 cap.release()
