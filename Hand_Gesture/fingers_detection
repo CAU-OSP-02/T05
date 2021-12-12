@@ -100,8 +100,6 @@ while(True):
         cv2.putText(img, 'score :' , (50,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
         cv2.putText(img, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA) 
             
-            
-
         if count_defects == 0 :
             if ratio<19: #Gesture 1
                 myanswer = 1
@@ -118,15 +116,12 @@ while(True):
                 else: #Gesture 9
                     myanswer = 9
                     my_score()
-            
-                    
 
         elif count_defects == 1 :
             if ratio<13: #Gesture 2
                 myanswer = 2
                 my_score()
                         
-                    
             elif ratio >11 : #Gesture 7
                 myanswer = 7
                 my_score()
