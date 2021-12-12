@@ -21,7 +21,7 @@ def my_score():
           
 
 image = cv2.imread("image01.jpg",cv2.IMREAD_ANYCOLOR)
-cv2.imshow("question",image)
+#cv2.imshow("question",image)
 
 #capturing the video 
 cap = cv2.VideoCapture(0)
@@ -29,7 +29,7 @@ cap = cv2.VideoCapture(0)
 finger_one()
 
 
-while(cap.isOpend()):
+while(cap.isOpened()):
     try:             
         ret, hand = cap.read()
         hand=cv2.flip(hand,1)
@@ -57,7 +57,7 @@ while(cap.isOpend()):
         hand_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
 
         #thresholding the image
-        ret, thresh = cv2.threshold(img_gray, 98, 255,cv2.THRESH_TRUNC)
+        ret, thresh = cv2.threshold(hand_gray, 98, 255,cv2.THRESH_TRUNC)
       
         #finding contours in the threshold image
         contours,_ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -92,6 +92,7 @@ while(cap.isOpend()):
                 angle = math.acos((b**2 + c**2 - a**2)/(2*b*c)) * 57.295
                 if angle <= 90:
                     count_defects += 1
+                    print("angle:",count_defects)
 
                 cv2.circle(img,far,5,[0,0,255],-1)
                 cv2.line(img,start,end,[255,0,0],2)
@@ -102,29 +103,28 @@ while(cap.isOpend()):
             cv2.putText(hand, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA) 
             
             if count_defects == 0 :
-                if ratio<19: #Gesture 1
+                if 9<ratio<11: #Gesture 1
                     myanswer = 1
                     my_score()
                     
-                elif ratio>15 and ratio<21: #Gesture 6
+                elif ratio>5 and ratio<12: #Gesture 6
                     myanswer = 6
                     my_score()
 
-                elif ratio>25:
-                    if ratio<33: #Gesture 0
-                        myanswer = 0
-                        my_score()
+                elif 12<ratio<15: #Gesture 0
+                    myanswer = 10
+                    my_score()
 
-                    else: #Gesture 9
-                        myanswer = 9
-                        my_score()
+                elif 15 <ratio <30: #Gesture 9
+                    myanswer = 9
+                    my_score()
 
             elif count_defects == 1 :
-                if ratio<13: #Gesture 2
+                if 7<ratio<10: #Gesture 2
                     myanswer = 2
                     my_score()
                         
-                elif ratio >11 : #Gesture 7
+                elif 4<ratio <8 : #Gesture 7
                     myanswer = 7
                     my_score()
 
@@ -133,7 +133,7 @@ while(cap.isOpend()):
                     myanswer = 8
                     my_score()
 
-                elif ratio>13: #Gesture 3
+                elif 6<ratio<11: #Gesture 3
                     myanswer = 3
                     my_score()
         
@@ -149,7 +149,7 @@ while(cap.isOpend()):
 
     except:
         pass
-    k = cv2.waitkey(250) & 0xFF
+    k = cv2.waitKey(250) & 0xFF
     if k == 27:
         break
 
