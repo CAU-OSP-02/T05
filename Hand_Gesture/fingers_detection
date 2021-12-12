@@ -31,15 +31,16 @@ finger_one()
 
 while(cap.isOpend()):
     try:             
-        ret,img=cap.read()
-        img=cv2.flip(img,1)
-
+        ret, hand = cap.read()
+        hand=cv2.flip(hand,1)
+        if ret == True:
+            pass
 
         #making the img of dimension
-        img =img[100:700,100:700]
+        hand =hand[100:700,100:700]
         
         #using hsv we detect the color of skin
-        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        hsv = cv2.cvtColor(hand, cv2.COLOR_BGR2HSV)
         lower_skin = np.array([0, 58, 30], dtype = "uint8")
         upper_skin = np.array([33, 255, 255], dtype = "uint8")
         
@@ -50,10 +51,10 @@ while(cap.isOpend()):
         kernel = np.ones((5,5),np.uint8)
         mask = cv2.dilate(mask,kernel,iterations = 3)
         blur = cv2.bilateralFilter(mask,9,200,200)
-        res = cv2.bitwise_and(img, img, mask= blur)
+        res = cv2.bitwise_and(hand,hand, mask= blur)
 
         #convert to BGR -> GRAY 
-        img_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
+        hand_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
 
         #thresholding the image
         ret, thresh = cv2.threshold(img_gray, 98, 255,cv2.THRESH_TRUNC)
@@ -68,11 +69,11 @@ while(cap.isOpend()):
         hullarea = cv2.contourArea(hull)
         cntarea = cv2.contourArea(cnt)
         x,y,w,h = cv2.boundingRect(hull)
-        img = cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+        hand = cv2.rectangle(hand,(x,y),(x+w,y+h),(0,255,0),2)
 
         ratio=(hullarea+cntarea)/(hullarea-cntarea)
         print("ratio:",ratio)
-        img_ = cv2.drawContours(img, hull, -2, (0,0,255), 10)
+        img = cv2.drawContours(hand, hull, -2, (0,0,255), 10)
       
         if len(contours) > 0:
             hull = cv2.convexHull(cnt, returnPoints=False)
@@ -97,8 +98,8 @@ while(cap.isOpend()):
 
             # hand gestures and display the result 
             font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(img, 'score :' , (50,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
-            cv2.putText(img, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA) 
+            cv2.putText(hand, 'score :' , (50,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
+            cv2.putText(hand, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA) 
             
             if count_defects == 0 :
                 if ratio<19: #Gesture 1
@@ -113,7 +114,7 @@ while(cap.isOpend()):
                     if ratio<33: #Gesture 0
                         myanswer = 0
                         my_score()
-                        
+
                     else: #Gesture 9
                         myanswer = 9
                         my_score()
@@ -144,7 +145,7 @@ while(cap.isOpend()):
                     myanswer = 5
                     my_score()
         
-            cv2.imshow('img',img)
+            cv2.imshow('hand',hand)
 
     except:
         pass
