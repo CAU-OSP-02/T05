@@ -105,7 +105,6 @@ while(True):
                 myanswer = 1
                 my_score()
                     
-                
             elif ratio>15 and ratio<21: #Gesture 6
                 myanswer = 6
                 my_score()
