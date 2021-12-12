@@ -4,25 +4,50 @@ import math
 from PIL import Image
 
 #전역변수선언 
-result = 1
+result = 0
 score = 0
 
 #함수선언
-def finger_one():
-    global result
-    return result
-
 def my_score():
     global score
     global result
     if result == myanswer:
         score += 100
-        result += 1
-          
+
+def img1():
+    result = 1
+
+def img2():
+    result = 2
+
+def img3():
+    result = 3
+
+def img4():
+    result = 4
+
+def img5():
+    result = 5
+
+def img6():
+    result = 6
+
+def img7():
+    result = 7
+
+def img8():
+    result = 8
+
+def img9():
+    result = 9
+
+def img10():
+    result = 10
+
+img1()
+
 #capturing the video 
 cap = cv2.VideoCapture(0)
-
-finger_one()
 
 while(cap.isOpened()):
     try:             
