@@ -16,7 +16,7 @@ def my_score():
     global score
     global result
     if result == myanswer:
-        score += 10
+        score += 100
         result += 1
           
 #capturing the video 
