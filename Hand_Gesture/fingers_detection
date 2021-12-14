@@ -128,7 +128,7 @@ while(cap.isOpened()):
                     myanswer = 1
                     my_score()
                     
-                elif ratio>5 and ratio<12: #Gesture 6
+                elif 5<ratio<12: #Gesture 6
                     myanswer = 6
                     my_score()
 
@@ -173,10 +173,6 @@ while(cap.isOpened()):
 
     k = cv2.waitKey(250) & 0xFF
     if k == 27:
-
-    K = cv2.waitkey(250) & 0xFF
-    if K == 27:
-
         break
 
 cap.release()
