@@ -13,12 +13,14 @@ def my_score():
     global result
     if result == myanswer:
         score += 100
+        result = 0
 
 
 image = cv2.imread("image01.jpg",cv2.IMREAD_ANYCOLOR)
 cv2.imshow("question",image)
 
 def img1():
+    #open
     result = 1
 
 def img2():
@@ -120,11 +122,7 @@ while(cap.isOpened()):
                     count_defects += 1
                     print("angle:",count_defects)
 
-            # hand gestures and display the result 
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(hand, 'score :' , (50,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
-            cv2.putText(hand, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA) 
-            
+            # hand gestures and display the result            
             if count_defects == 0 :
                 if 9<ratio<11: #Gesture 1
                     myanswer = 1
