@@ -2,7 +2,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import pygame
-import sys
 import cv2
 import numpy as np
 import threading
