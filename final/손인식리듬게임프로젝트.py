@@ -2,7 +2,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import pygame
-import sys
 import cv2
 import numpy as np
 import threading
@@ -295,15 +294,15 @@ class Cam:
 pygame.mixer.init()
 
 def musicplay():
-    pygame.mixer.music.load('bgm.mp3')
-    pygame.mixer.music.play(loops=0)
+     pygame.mixer.music.load('bgm.mp3')
+     pygame.mixer.music.play(loops=0)
 
 def game1musicplay():
-    pygame.mixer.music.load('JB.mp3')
-    pygame.mixer.music.play(loops=0)
+     pygame.mixer.music.load('JB.mp3')
+     pygame.mixer.music.play(loops=0)
 
 def game2musicplay():
-    pygame.mixer.music.load('JJJ.mp3')
+    pygame.mixer.music.load('JJJ.MP3')
     pygame.mixer.music.play(loops=0)
 
 def game3musicplay():
@@ -354,7 +353,8 @@ class startgame1(tk.Frame): #original
     def __init__(self, master):
         game1musicplay()
         tk.Frame.__init__(self, master)
-        Cam(Tk())
+        #화면 스위치
+        Cam(Tk()) 
         tk.Label(self, text="").pack()
         tk.Button(self, text="Quit", command=lambda: quit(), font=('Arial', 20)).pack()
 
@@ -363,9 +363,12 @@ class startgame2(tk.Frame): #Jar Jar Jar
     def __init__(self, master):
         game2musicplay()
         tk.Frame.__init__(self, master)
+<<<<<<< HEAD:손인식리듬게임프로젝트.py
+=======
+        #화면 스위치
+>>>>>>> 9e72bb11ca3df84c42e2be78ac0a7d724f68137d:final/손인식리듬게임프로젝트.py
         Cam(Tk())
         tk.Label(self, text="").pack()
-        
         tk.Button(self, text="Quit", command=lambda: quit(), font=('Arial', 20)).pack()
 
 

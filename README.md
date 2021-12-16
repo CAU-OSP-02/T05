@@ -6,24 +6,37 @@ https://docs.google.com/document/d/1W8jNu3JnWYxae4NawsWreSGE7zs020SjfovWJDKLTsQ/
 
 ## Description
 
-손을 인식하여 진행되는 리듬게임 구현.
+손을 인식하여 진행되는 숫자 학습 게임 구현.
 
-화면에 제시된 문제를 보고 손을 문제에 제시된 실루엣에 일치하도록 움직여 문제를 통과하는 리듬게임이다.
+화면에 제시된 문제를 보고 손을 문제에 제시된 실루엣에 일치하도록 움직여 문제를 통과하는 게임이다.
+어린 친구들의 숫자 공부와 손가락으로 만드는 숫자 모양 학습을 목표로 한다.
 시간 안에 문제를 해결하여 많은 점수를 얻는 것을 목표로 한다.
 
 ## Files 
 
+
+
 ## Environment
 
-기본적으로 Python을 이용해 프로젝트를 제작하였다.
+개발 환경은 Visual studio Code 이고
+Python을 이용해 프로젝트를 제작하였다.
+
 
 ## Install
 
 프로젝트를 실행시키기 위하여 다운받아야 하는 라이브러리
 
 ```
+pip3 install opencv-python
+
+pip install numpy
+
+pip install pillow
+
 pip install pygame
 ```
+
+
 
 ## Authors
 
