@@ -10,8 +10,9 @@ import datetime
 import os
 import PIL.Image, PIL.ImageTk
 from pygame import mixer
-import PIL.Image, PIL.ImageTk
 from tkinter import *
+from fingers_detection import *
+
 # 해야할 것 - 프레임 배경 색 설정/ opencv 화면과 점수화면 합쳐서 넣기, 문제 출력 
 
 pygame.mixer.init()
