@@ -17,7 +17,7 @@ import time
 #전역변수선언 
 result = 0
 score = 0
-myanswer = None #미사용값
+myanswer = None
 a = 0
 
 #함수선언
@@ -150,7 +150,6 @@ class Cam:
         self.canvas = Canvas(window, width = self.width, height = self.height)
         self.canvas.pack()
         self.canvas_on_down = False
-        self.delay = 33
         self.update()
         self.window.mainloop()
 
@@ -350,7 +349,7 @@ class MainWindow(tk.Frame):
             
 
     
-class startgame1(tk.Frame): #Jelly bear
+class startgame1(tk.Frame): #original
     def __init__(self, master):
         game1musicplay()
         tk.Frame.__init__(self, master)
@@ -364,7 +363,10 @@ class startgame2(tk.Frame): #Jar Jar Jar
     def __init__(self, master):
         game2musicplay()
         tk.Frame.__init__(self, master)
+<<<<<<< HEAD:손인식리듬게임프로젝트.py
+=======
         #화면 스위치
+>>>>>>> 9e72bb11ca3df84c42e2be78ac0a7d724f68137d:final/손인식리듬게임프로젝트.py
         Cam(Tk())
         tk.Label(self, text="").pack()
         tk.Button(self, text="Quit", command=lambda: quit(), font=('Arial', 20)).pack()
