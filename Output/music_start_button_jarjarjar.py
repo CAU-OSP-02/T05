@@ -6,14 +6,13 @@ ws.geometry("960x480")
 ws.title("게임시작 버튼")
 
 def jaljaljal():
-    sound = "C:/Users/minja/Desktop/강민재/음악/잘잘잘.wav"
+    sound = "./T05/music/JJJ.wav"
     mixer.init()
     mixer.music.load(sound)
     mixer.music.play()
     
 
-photo = PhotoImage(file="C:/Users/minja/Desktop/강민재/잘잘잘 게임버튼.png")
+photo = PhotoImage(file="./T05/final/startbutton.png")
 btn = Button(ws, image=photo,command = jaljaljal)
 btn.pack()
-
 ws.mainloop()
