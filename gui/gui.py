@@ -15,13 +15,8 @@ from random import *
 
 
 
-# 해야할 것 - opencv 화면과 점수화면 합쳐서 넣기, 문제 출력 
 
 pygame.mixer.init()
-
-def musicplay():
-    pygame.mixer.music.load('bgm.mp3')
-    pygame.mixer.music.play(loops=0)
 
 def game1musicplay():
     pygame.mixer.music.load('origine.mp3')
@@ -56,7 +51,7 @@ class MainWindow(tk.Frame):
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back1 = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\page\background.png")
+        back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
         # 배경 배치
         lbl_b1 = Label(image = back1)
@@ -64,15 +59,15 @@ class MainWindow(tk.Frame):
         lbl_b1.place(x = 0, y = 0)
         
         #디자인 용 그림 불러오기
-        design1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\1.png")
-        design2=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\2.png")
-        design3=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\3.png")
-        design4=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\4.png")
-        design5=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\5.png")
-        design6=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\6.png")
-        design7=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\7.png")
-        design8=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\8.png")
-        design9=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\background design\9.png")
+        design1=tk.PhotoImage(file="./T05/gui/background design/1.png")
+        design2=tk.PhotoImage(file="./T05/gui/background design/2.png")
+        design3=tk.PhotoImage(file="./T05/gui/background design/3.png")
+        design4=tk.PhotoImage(file="./T05/gui/background design/4.png")
+        design5=tk.PhotoImage(file="./T05/gui/background design/5.png")
+        design6=tk.PhotoImage(file="./T05/gui/background design/6.png")
+        design7=tk.PhotoImage(file=r"C:\git_open_02\T05\gui \background design\7.png")
+        design8=tk.PhotoImage(file="./T05/gui/background design/8.png")
+        design9=tk.PhotoImage(file="./T05/gui/background design/9.png")
         
         #디자인 용 그림배치
         lbl1 = Label(image=design1, bg = '#F8FFAE')
@@ -105,7 +100,7 @@ class MainWindow(tk.Frame):
         
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\text\FNSG.png")
+        text1=tk.PhotoImage(file="./T05/gui/text/FNSG.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -114,10 +109,10 @@ class MainWindow(tk.Frame):
         
         
         # 버튼 불러오기
-        start = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\game start.png")
-        help = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\help.png")
-        setting = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\setting.png")
-        quit = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\quit.png")
+        start = tk.PhotoImage(file="./T05/gui/btn/game start.png")
+        help = tk.PhotoImage(file="./T05/gui/btn/help.png")
+        setting = tk.PhotoImage(file="./T05/gui/btn/setting.png")
+        quit = tk.PhotoImage(file="./T05/gui/btn/quit.png")
         
         # 버튼 배치
         
@@ -151,7 +146,7 @@ class startgame1(tk.Frame): #Jelly bear
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back1 = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\page\background.png")
+        back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
         # 배경 배치
         lbl_b1 = Label(image = back1)
@@ -159,7 +154,7 @@ class startgame1(tk.Frame): #Jelly bear
         lbl_b1.place(x = 0, y = 0)
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\text\t origine.png")
+        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui\text\t origine.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -167,18 +162,18 @@ class startgame1(tk.Frame): #Jelly bear
         lbl_t1.place(x=90, y=70)
             
         # 버튼 불러오기
-        startSong = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\start song.png")
-        back = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\back.png")
+        startSong = tk.PhotoImage(file="./T05/gui/btn/start song.png")
+        back = tk.PhotoImage(file="./T05/gui/btn/back.png")
         
         # 버튼 배치
         
-        btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command=game1musicplay())
+        btn1 = Button(image=startSong, bg = '#F8FFAE')
+                      #command=game1musicplay())
         btn1.image = startSong
         btn1.place(x = 320, y = 230)
         
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Start))
+                      command=lambda: master.switch_frame(Start), musicstop())
         btn3.image = back
         btn3.place(x = 320, y = 430)
         
@@ -191,7 +186,7 @@ class startgame2(tk.Frame): #Jar Jar Jar
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back1 = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\page\background.png")
+        back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
         # 배경 배치
         lbl_b1 = Label(image = back1)
@@ -199,7 +194,7 @@ class startgame2(tk.Frame): #Jar Jar Jar
         lbl_b1.place(x = 0, y = 0)
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\text\t JJJ.png")
+        text1=tk.PhotoImage(file="./T05/gui/text/t JJJ.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -207,18 +202,18 @@ class startgame2(tk.Frame): #Jar Jar Jar
         lbl_t1.place(x=90, y=70)
             
         # 버튼 불러오기
-        startSong = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\start song.png")
-        back = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\back.png")
+        startSong = tk.PhotoImage(file="./T05/gui/btn/start song.png")
+        back = tk.PhotoImage(file="./T05/gui/btn/back.png")
         
         # 버튼 배치
         
-        btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command=game2musicplay())
+        btn1 = Button(image=startSong, bg = '#F8FFAE')
+                      #command=game2musicplay())
         btn1.image = startSong
         btn1.place(x = 320, y = 230)
         
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Start))
+                      command=lambda: master.switch_frame(Start), musicstop())
         btn3.image = back
         btn3.place(x = 320, y = 430)
 
@@ -229,7 +224,7 @@ class Start(tk.Frame):
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back2 = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\page\background2.png")
+        back2 = tk.PhotoImage(file="./T05/gui/page/background2.png")
 
         # 배경 배치
         lbl_b2 = Label(image = back2)
@@ -237,7 +232,7 @@ class Start(tk.Frame):
         lbl_b2.place(x = 0, y = 0)
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\text\GameStart.png")
+        text1=tk.PhotoImage(file="./T05/gui/text/GameStart.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -245,9 +240,9 @@ class Start(tk.Frame):
         lbl_t1.place(x=215, y=70) 
         
         # 버튼 불러오기
-        Origine = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\origine.png")
-        JarJarJar = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\JJJ.png")
-        back = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\back.png")
+        Origine = tk.PhotoImage(file="./T05/gui/btn/origine.png")
+        JarJarJar = tk.PhotoImage(file="./T05/gui/btn/JJJ.png")
+        back = tk.PhotoImage(file="./T05/gui/btn/back.png")
         
         
         # 버튼 배치
@@ -275,7 +270,7 @@ class Help(tk.Frame):
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back2 = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\page\background2.png")
+        back2 = tk.PhotoImage(file="./T05/gui/page/background2.png")
 
         # 배경 배치
         lbl_b2 = Label(image = back2)
@@ -283,7 +278,7 @@ class Help(tk.Frame):
         lbl_b2.place(x=0, y=0)
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\text\help.png")
+        text1=tk.PhotoImage(file="./T05/gui/text/help.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -291,7 +286,7 @@ class Help(tk.Frame):
         lbl_t1.place(x=350, y=70) 
         
         # 버튼 불러오기
-        back = tk.PhotoImage(file=r"C:\git_open_02\T05\gui design\btn\back.png")
+        back = tk.PhotoImage(file="./T05/gui/btn/back.png")
     
         # 버튼 배치
         btn1 = Button(image=back, bg = '#F8FFAE',
@@ -306,7 +301,7 @@ class Setting(tk.Frame):
     def __init__(self, master):
         
         # 배경 불러오기
-        back2 = tk.PhotoImage(file = r"C:\git_open_02\T05\gui design\page\background2.png")
+        back2 = tk.PhotoImage(file = "./T05/gui/page/background2.png")
 
         # 배경 배치
         lbl_b2 = Label(image = back2)
@@ -314,7 +309,7 @@ class Setting(tk.Frame):
         lbl_b2.place(x=0, y=0)
         
         # 텍스트 불러오기
-        text1=tk.PhotoImage(file = r"C:\git_open_02\T05\gui design\text\setting.png")
+        text1=tk.PhotoImage(file = "./T05/gui/text/setting.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
@@ -322,9 +317,9 @@ class Setting(tk.Frame):
         lbl_t1.place(x=300, y=70) 
         
         # 버튼 불러오기
-        on = tk.PhotoImage(file = r"C:\git_open_02\T05\gui design\btn\on.png")
-        off = tk.PhotoImage(file = r"C:\git_open_02\T05\gui design\btn\off.png")
-        back = tk.PhotoImage(file = r"C:\git_open_02\T05\gui design\btn\back.png")
+        on = tk.PhotoImage(file = "./T05/gui/btn/on.png")
+        off = tk.PhotoImage(file = "./T05/gui/btn/off.png")
+        back = tk.PhotoImage(file = "./T05/gui/btn/back.png")
         
         
         # 버튼 배치
