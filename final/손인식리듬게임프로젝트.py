@@ -30,6 +30,7 @@ def my_score():
 
 def img1():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "10.png")
@@ -41,6 +42,7 @@ def img1():
 
 def img2():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "2.png")
@@ -52,6 +54,7 @@ def img2():
 
 def img3():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "3.png")
@@ -63,6 +66,7 @@ def img3():
 
 def img4():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "4.png")
@@ -74,6 +78,7 @@ def img4():
 
 def img5():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "5.png")
@@ -85,6 +90,7 @@ def img5():
 
 def img6():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "6.png")
@@ -96,6 +102,7 @@ def img6():
 
 def img7():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "7.png")
@@ -107,6 +114,7 @@ def img7():
 
 def img8():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "8.png")
@@ -118,6 +126,7 @@ def img8():
 
 def img9():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "9.png")
@@ -129,6 +138,7 @@ def img9():
 
 def img10():
     global a
+    global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "10.png")
@@ -139,12 +149,13 @@ def img10():
     result = 10
 
 def detect():
-
+    global myanswer
+    cap = cv2.VideoCapture(0) #capturing the video
+    
     win = tk.Tk()
     win.geometry("700x350")
     tk.Label = tk.Label(win)
     tk.Label.grid(row=0, column=0)
-    cap = cv2.VideoCapture(0) #capturing the video
     def show_frames():
         cv2image= cv2.cvtColor(cap.read()[1],cv2.COLOR_BGR2RGB)
         img = Image.fromarray(cv2image)
@@ -341,7 +352,7 @@ class startgame1(tk.Frame): #original
         game1musicplay()
         tk.Frame.__init__(self, master)
         #화면 스위치
-        Cam(Tk()) 
+        detect()
         tk.Label(self, text="").pack()
         tk.Button(self, text="Quit", command=lambda: quit(), font=('Arial', 20)).pack()
 
@@ -350,11 +361,8 @@ class startgame2(tk.Frame): #Jar Jar Jar
     def __init__(self, master):
         game2musicplay()
         tk.Frame.__init__(self, master)
-<<<<<<< HEAD:손인식리듬게임프로젝트.py
-=======
         #화면 스위치
->>>>>>> 9e72bb11ca3df84c42e2be78ac0a7d724f68137d:final/손인식리듬게임프로젝트.py
-        Cam(Tk())
+        detect()
         tk.Label(self, text="").pack()
         tk.Button(self, text="Quit", command=lambda: quit(), font=('Arial', 20)).pack()
 
