@@ -139,31 +139,14 @@ def img10():
     result = 10
 
 class Cam:
-    def __init__(self, window):
-        self.width, self.height = 300,200
-        self.window = window
-        self.window.geometry("960x640")
-        self.window.title("Tkinter + OpenCV")
-        self.detect()
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-        self.canvas = Canvas(window, width = self.width, height = self.height)
-        self.canvas.pack()
-        self.canvas_on_down = False
-        self.update()
-        self.window.mainloop()
-
-    def update(self):
-        ret, frame = self.cap.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        if self.canvas_on_down == True:
-            frame = cv2.rectangle(frame)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
-        self.window.after(self.delay, self.update)
-
     def detect(self):
-    
+
+        # 프레임 너비, 높이 설정
+        frm = tk.Frame(win, bg="white", width=720, height=480) 
+        frm.grid(row=1, column=0)
+        lbl1 = tk.Label(frm)
+        lbl1.grid()
+
         #capturing the video
         cap = cv2.VideoCapture(0)
         global myanswer
@@ -281,13 +264,16 @@ class Cam:
                 
                     cv2.imshow('hand',hand)
 
+            #예외 처리
             except:
                 pass
 
             k = cv2.waitKey(250) & 0xFF
             if k == 27:
                 break
-
+        lbl1.imgtk = imgtk
+        lbl1.configure(image=imgtk)
+        lbl1.after(10, video_play)
         cap.release()
         cv2.destroyAllWindows()
 
