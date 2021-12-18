@@ -6,6 +6,7 @@ from PIL import Image
 #전역변수선언 
 result = 0
 score = 0
+myanswer =None
 
 #함수선언
 def my_score():
@@ -175,3 +176,4 @@ def detect():
     cap.release()
     cv2.destroyAllWindows()    
 
+detect()
