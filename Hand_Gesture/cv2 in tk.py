@@ -1,5 +1,6 @@
 from PIL import Image
 from PIL import ImageTk
+import numpy as np
 import tkinter as tk
 import threading
 import datetime
@@ -26,14 +27,11 @@ tk.Label = tk.Label(win)
 tk.Label.grid(row=0, column=0)
 cap = cv2.VideoCapture(0) #capturing the video
 def show_frames():
-    # Get the latest frame and convert into Image
     cv2image= cv2.cvtColor(cap.read()[1],cv2.COLOR_BGR2RGB)
     img = Image.fromarray(cv2image)
-    # Convert image to PhotoImage
     imgtk = ImageTk.PhotoImage(image = img)
     tk.Label.imgtk = imgtk
     tk.Label.configure(image=imgtk)
-    # Repeat after an interval to capture continiously
     tk.Label.after(20, show_frames)
 
 show_frames()
@@ -150,8 +148,6 @@ while(cap.isOpened()):
             elif count_defects == 4: #Gesture 5
                     myanswer = 5
                     my_score()
-        
-            cv2.imshow('hand',hand)
 
     except:
         pass
