@@ -4,6 +4,7 @@
 TEAM5 GOOGLE DOC
 https://docs.google.com/document/d/1W8jNu3JnWYxae4NawsWreSGE7zs020SjfovWJDKLTsQ/edit?usp=sharing
 
+
 ## Description
 
 손을 인식하여 진행되는 숫자 학습 게임 구현.
@@ -12,8 +13,32 @@ https://docs.google.com/document/d/1W8jNu3JnWYxae4NawsWreSGE7zs020SjfovWJDKLTsQ/
 어린 친구들의 숫자 공부와 손가락으로 만드는 숫자 모양 학습을 목표로 한다.
 시간 안에 문제를 해결하여 많은 점수를 얻는 것을 목표로 한다.
 
+
 ## Files 
 
+### Team
+그동안의 활동을 정리한 요약본과 팀 활동을 위해 필요한 작업물을 모아놓았다.
+
+### Hand_Gesture
+프로젝트를 위해 손을 인식하는 코드를 구현하였다.
+
+### hand pic
+문제 이미지로 쓰일 이미지를 모아놓았다.
+
+### sound
+음악을 출력하는 코드를 구현하였다.
+
+### UI
+프로젝트의 UI코드를 구현하였다.
+
+### Output
+점수와 노래가사, 문제 이미지를 출력하는 코드와 음악을 재생시키는 버튼을 구현하였다.
+
+### music
+프로젝트를 위해 쓰일 음악을 모아놓았다. 
+
+### final
+최종적으로 프로젝트를 구동하기 위해 필요한 코드와 자료들을 모아놓았다.
 
 
 ## Environment
@@ -37,7 +62,6 @@ pip install pygame
 ```
 
 
-
 ## Authors
 
  - [Kang minjae](https://github.com/mymj8)
@@ -45,6 +69,7 @@ pip install pygame
  - [Lee dohyeon](https://github.com/KIWOO2001)
  - [Yi yourim](https://github.com/20214110)
  - [Choi sunmi](https://github.com/choisunmi00)
+
 
 ## License
 
