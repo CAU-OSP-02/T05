@@ -16,28 +16,28 @@ https://docs.google.com/document/d/1W8jNu3JnWYxae4NawsWreSGE7zs020SjfovWJDKLTsQ/
 
 ## Files 
 
-### Team
+- **Team**
 그동안의 활동을 정리한 요약본과 팀 활동을 위해 필요한 작업물을 모아놓았다.
 
-### Hand_Gesture
+- **Hand_Gesture**
 프로젝트를 위해 손을 인식하는 코드를 구현하였다.
 
-### hand pic
+- **hand pic**
 문제 이미지로 쓰일 이미지를 모아놓았다.
 
-### sound
+- **sound**
 음악을 출력하는 코드를 구현하였다.
 
-### UI
+- **UI**
 프로젝트의 UI코드를 구현하였다.
 
-### Output
+- **Output**
 점수와 노래가사, 문제 이미지를 출력하는 코드와 음악을 재생시키는 버튼을 구현하였다.
 
-### music
+- **music**
 프로젝트를 위해 쓰일 음악을 모아놓았다. 
 
-### final
+- **final**
 최종적으로 프로젝트를 구동하기 위해 필요한 코드와 자료들을 모아놓았다.
 
 
