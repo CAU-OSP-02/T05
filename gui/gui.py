@@ -18,6 +18,10 @@ from random import *
 
 pygame.mixer.init()
 
+def musicplay():
+    pygame.mixer.music.load('bgm.mp3')
+    pygame.mixer.music.play(loops=0)
+
 def game1musicplay():
     pygame.mixer.music.load('origine.mp3')
     pygame.mixer.music.play(loops=0)
@@ -28,9 +32,14 @@ def game2musicplay():
 
 
 def musicstop():
-    pygame.mixer.music.stop()
+    pygame.mixer.music.stop('bgm.mp3')
 
-
+def game1musicstop():
+    pygame.mixer.music.load('origine.mp3')
+    
+def game2musicstop():
+    pygame.mixer.music.load('JJJ.mp3')   
+    
 class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -167,13 +176,13 @@ class startgame1(tk.Frame): #Jelly bear
         
         # 버튼 배치
         
-        btn1 = Button(image=startSong, bg = '#F8FFAE')
-                      #command=game1musicplay())
+        btn1 = Button(image=startSong, bg = '#F8FFAE'
+                      ,command=musicstop(),command=game1musicplay())
         btn1.image = startSong
         btn1.place(x = 320, y = 230)
         
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Start), musicstop())
+                      command=lambda: master.switch_frame(Start), command = game1musicstop())
         btn3.image = back
         btn3.place(x = 320, y = 430)
         
@@ -207,13 +216,13 @@ class startgame2(tk.Frame): #Jar Jar Jar
         
         # 버튼 배치
         
-        btn1 = Button(image=startSong, bg = '#F8FFAE')
-                      #command=game2musicplay())
+        btn1 = Button(image=startSong, bg = '#F8FFAE', 
+                      command=musicstop(), command = game2musicplay())
         btn1.image = startSong
         btn1.place(x = 320, y = 230)
         
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Start), musicstop())
+                      command=lambda: master.switch_frame(Start), command = game2musicstop())
         btn3.image = back
         btn3.place(x = 320, y = 430)
 
@@ -325,7 +334,7 @@ class Setting(tk.Frame):
         # 버튼 배치
         
         btn1 = Button(image=on, bg = '#F8FFAE',
-                      command = musicplay)
+                      command = musicplay())
         btn1.image = on
         btn1.place(x = 255, y = 300)
         btn2 = Button(image=off, bg = '#F8FFAE',
@@ -347,3 +356,4 @@ if __name__ == "__main__":
     app.maxsize(960,640)
     app.resizable(False, False)
     app.mainloop()  # 창 유지
+
