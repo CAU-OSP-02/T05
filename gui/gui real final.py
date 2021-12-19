@@ -1,17 +1,11 @@
 import tkinter as tk
 import pygame
-import sys
 import cv2
-import mediapipe as mp
 import numpy as np
 import threading
-import datetime
-import os
 import PIL.Image, PIL.ImageTk
 from pygame import mixer
-import PIL.Image, PIL.ImageTk
 from tkinter import *
-from random import *
 import time
 import math
 
@@ -78,8 +72,9 @@ class Cam(tk.Frame):
         self.master.after(20, self.update)
     
 def detect():
-    global myanswer
+    #capturing the video
     cap = cv2.VideoCapture(0)
+
     while(cap.isOpened()):
         try:             
             ret, hand = cap.read()
@@ -190,8 +185,8 @@ def detect():
                 elif count_defects == 4: #Gesture 5
                         myanswer = 5
                         my_score()
-
-            cv2.imshow('hand',hand)
+            
+                cv2.imshow('hand',hand)
 
         except:
             pass
@@ -202,13 +197,29 @@ def detect():
 
     cap.release()
     cv2.destroyAllWindows()
-
         
                
         
 class question(tk.Frame):
     def __init__(self, master):
-           
+        tk.Frame.__init__(self, master)
+        self.master = master
+        self.canvas = Canvas(master, width = 300, height = 200)
+        self.canvas.place(x=520, y=210)
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 300)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
+        self.update()
+        self.detect()
+        
+    def update(self):
+        self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
+        self.imgtk = PIL.ImageTk.PhotoImage(image = Image.fromarray(self.hand))
+        self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
+        self.master.after(20, self.update)
+
+
+    def __init__(self, master):  
         tk.Frame.__init__(self, master)
         scoreimage = tk.PhotoImage(file = "./T05/gui/text/score.png")########점수판 이미지 경로 부탁드려요
         scoreImg = Label(image=scoreimage)    
@@ -480,7 +491,7 @@ class startgame1(tk.Frame): #Jelly bear
         # 버튼 불러오기
         startSong = tk.PhotoImage(file="./T05/gui/btn/start song.png")
         back = tk.PhotoImage(file="./T05/gui/btn/back.png")
-        camcam = tk.PhotoImage(file="") ##################캠 버튼 이미지 경로 부탁드려요
+        camcam = tk.PhotoImage(file="./T05/gui/btn/cam.png")
         
         # 버튼 배치
         
@@ -498,7 +509,7 @@ class startgame1(tk.Frame): #Jelly bear
         btn1.place(x = 150, y = 430)
 
         btn2 = Button(image=camcam, bg = '#F8FFAE',
-                      command=detect)############ 도현님 opencv창 띄우는 함수 여기다가 넣어주세요
+                      command=detect)
         btn2.image = camcam
         btn2.place(x = 250, y = 250)
         
@@ -537,7 +548,7 @@ class startgame2(tk.Frame): #Jar Jar Jar
         # 버튼 불러오기
         startSong = tk.PhotoImage(file="./T05/gui/btn/start song.png")
         back = tk.PhotoImage(file="./T05/gui/btn/back.png")
-        camcam = tk.PhotoImage(file="./T05/gui/btn/cam.png") ##################캠 버튼 이미지 경로 부탁드려요
+        camcam = tk.PhotoImage(file="./T05/gui/btn/cam.png")
         
         # 버튼 배치
         
@@ -557,7 +568,7 @@ class startgame2(tk.Frame): #Jar Jar Jar
         btn1.place(x = 150, y = 430)
         
         btn2 = Button(image=camcam, bg = '#F8FFAE',
-                      command=lambda: [ music_stop()])############ 도현님 opencv창 띄우는 함수 여기다가 넣어주세요
+                      command=detect)
         btn2.image = camcam
         btn2.place(x = 250, y = 250)
 
