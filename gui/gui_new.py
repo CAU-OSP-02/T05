@@ -66,10 +66,9 @@ def my_score():
 
 #cv 창       
 class Cam(tk.Frame):
-    
+    global myanswer
     
     def __init__(self, master):
-        global myanswer
         tk.Frame.__init__(self, master)
         self.width, self.height = 300,200
         self.master = master
@@ -82,13 +81,13 @@ class Cam(tk.Frame):
         self.update()
         
     def update(self):
-        self.frame = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.frame))
+        ret, frame = self.cap.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
         self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         self.master.after(self.delay, self.update)
-
-        
-    def detect(self):    
+    
+    def detect(self):
         while(self.cap.isOpened()):
             try:             
                 ret, hand = self.cap.read()
@@ -209,7 +208,8 @@ class Cam(tk.Frame):
 
         self.cap.release()
         cv2.destroyAllWindows()
-         
+
+        
 
 pygame.mixer.init()
 
