@@ -18,7 +18,7 @@ import time
 result = 0
 score = 0
 myanswer = None
-a = 0
+
 
 #함수선언
 def my_score():
@@ -28,123 +28,113 @@ def my_score():
         score += 100
         result = 0
 
-def img1():
-    global a
+def img1(a):
     global result
     ws = Tk()
     start = time()
-    imgObj = PhotoImage(file = "10.png")
+    imgObj = PhotoImage(file = "1.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 1
 
-def img2():
-    global a
+def img2(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "2.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 2
 
-def img3():
-    global a
+def img3(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "3.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 3
 
-def img4():
-    global a
+def img4(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "4.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 4
 
-def img5():
-    global a
+def img5(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "5.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 5
 
-def img6():
-    global a
+def img6(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "6.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 6
 
-def img7():
-    global a
+def img7(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "7.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 7
 
-def img8():
-    global a
+def img8(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "8.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 8
 
-def img9():
-    global a
+def img9(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "9.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 9
 
-def img10():
-    global a
+def img10(a):
     global result
     ws = Tk()
     start = time()
     imgObj = PhotoImage(file = "10.png")
     imgLabel = Label(ws, image=imgObj)
     imgLabel.pack()
-    ws.after(a, ws.destroy)
+    ws.after(a)
     ws.mainloop()
     result = 10
 
