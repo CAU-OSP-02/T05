@@ -79,14 +79,16 @@ class Cam(tk.Frame):
         self.canvas = Canvas(master, width = self.width, height = self.height)
         self.canvas.place(x=520, y=210)
         self.delay = 33
-        def update():
-            self.frame = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.frame))
-            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
-            self.master.after(self.delay, self.update)
-
         self.update()
         
+    def update(self):
+        self.frame = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.frame))
+        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+        self.master.after(self.delay, self.update)
+
+        
+    def detect(self):    
         while(self.cap.isOpened()):
             try:             
                 ret, hand = self.cap.read()
