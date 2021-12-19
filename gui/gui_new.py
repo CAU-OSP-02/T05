@@ -81,16 +81,16 @@ class Cam(tk.Frame):
         self.update()
         
     def update(self):
-        ret, frame = self.cap.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+        self.ret, hand = self.cap.read()
+        hand = cv2.cvtColor(hand, cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(hand))
         self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         self.master.after(self.delay, self.update)
     
     def detect(self):
         while(self.cap.isOpened()):
             try:             
-                ret, hand = self.cap.read()
+                #ret, hand = self.cap.read()
                 hand=cv2.flip(hand,1)
                 if ret == True:
                     pass
