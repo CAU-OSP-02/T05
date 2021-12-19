@@ -79,14 +79,12 @@ class Cam(tk.Frame):
         self.canvas = Canvas(master, width = self.width, height = self.height)
         self.canvas.place(x=520, y=210)
         self.delay = 33
-        
-        def update(self):
+        def update():
             ret, frame = self.cap.read()
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
             self.master.after(self.delay, self.update)
-
         self.update()
 
         while(self.cap.isOpened()):
