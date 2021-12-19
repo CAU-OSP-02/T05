@@ -74,6 +74,7 @@ class Cam(tk.Frame):
         self.master = master
         self.cap = cv2.VideoCapture(0)
         self.ret, self.hand = self.cap.read()
+        self.hand = cv2.cvtColor(self.hand, cv2.COLOR_BGR2RGB)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         self.canvas = Canvas(master, width = self.width, height = self.height)
@@ -81,7 +82,7 @@ class Cam(tk.Frame):
         self.delay = 33
                 
         def update():
-            self.hand = cv2.cvtColor(self.hand, cv2.COLOR_BGR2RGB)
+            
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
             self.master.after(self.delay, self.update)
@@ -99,18 +100,17 @@ class Cam(tk.Frame):
                     self.hand =self.hand[100:700,100:700]
                 
                     #using hsv we detect the color of skin
-                    hsv = cv2.cvtColor(self.hand, cv2.COLOR_BGR2HSV)
                     lower_skin = np.array([0, 58, 30], dtype = "uint8")
                     upper_skin = np.array([33, 255, 255], dtype = "uint8")
                 
                     #applying mask to extract skin color object from the img
-                    mask = cv2.inRange(hsv, lower_skin, upper_skin)
+                    mask = cv2.inRange(self.hand, lower_skin, upper_skin)
 
                     #now we dilate our skin color object to remove black spots or noise from it
                     kernel = np.ones((5,5),np.uint8)
                     mask = cv2.dilate(mask,kernel,iterations = 3)
                     blur = cv2.bilateralFilter(mask,9,200,200)
-                    res = cv2.bitwise_and(self.hand,self.hand, mask= blur)
+                    res = cv2.bitwise_and(self.hand, self.hand, mask= blur)
 
                     #convert to BGR -> GRAY 
                     hand_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
@@ -206,11 +206,11 @@ class Cam(tk.Frame):
                 if k == 27:
                     break
 
-            self.cap.release()
-            cv2.destroyAllWindows()
+                self.cap.release()
+                cv2.destroyAllWindows()
 
-        self.update()
-        self.detect()
+        update()
+        detect()
 
         
 
