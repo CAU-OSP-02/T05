@@ -82,13 +82,12 @@ class Cam(tk.Frame):
         self.detect()
         
     def update(self):
-        self.ret, self.handhand = self.cap.read()
-        self.hand = cv2.cvtColor(self.hand, cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
-        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+        hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(hand))
+        #self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         self.master.after(self.delay, self.update)
     
-    def detect():
+    def detect(self):
         global myanswer
         cap = cv2.VideoCapture(0)
         while(cap.isOpened()):
