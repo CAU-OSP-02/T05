@@ -80,16 +80,7 @@ class Cam(tk.Frame):
         self.canvas.place(x=520, y=210)
         self.delay = 33
         self.update()
-        self.recog()
-
-    def update(self):
-        ret1, frame = self.cap.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
-        self.master.after(self.delay, self.update)
         
-    def recog(self):    
         while(self.cap.isOpened()):
             try:             
                 ret, hand = self.cap.read()
@@ -210,7 +201,12 @@ class Cam(tk.Frame):
 
         self.cap.release()
         cv2.destroyAllWindows()
-         
+        
+    def update(self):
+        self.frame = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.frame))
+        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+        self.master.after(self.delay, self.update)
 
 pygame.mixer.init()
 
