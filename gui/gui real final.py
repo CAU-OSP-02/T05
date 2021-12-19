@@ -10,6 +10,8 @@ import time
 import math
 
 
+
+
 pygame.mixer.init()
 
 
@@ -76,7 +78,8 @@ def detect():
     cap = cv2.VideoCapture(0)
 
     while(cap.isOpened()):
-        try:             
+        try: 
+                        
             ret, hand = cap.read()
             hand=cv2.flip(hand,1)
             if ret == True:
@@ -186,7 +189,7 @@ def detect():
                         myanswer = 5
                         my_score()
             
-                cv2.imshow('hand',hand)
+                #cv2.imshow('hand',hand)
 
         except:
             pass
@@ -201,24 +204,6 @@ def detect():
                
         
 class question(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        self.master = master
-        self.canvas = Canvas(master, width = 300, height = 200)
-        self.canvas.place(x=520, y=210)
-        self.cap = cv2.VideoCapture(0)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 300)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
-        self.update()
-        self.detect()
-        
-    def update(self):
-        self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-        self.imgtk = PIL.ImageTk.PhotoImage(image = Image.fromarray(self.hand))
-        self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
-        self.master.after(20, self.update)
-
-
     def __init__(self, master):  
         tk.Frame.__init__(self, master)
         scoreimage = tk.PhotoImage(file = "./T05/gui/text/score.png")########점수판 이미지 경로 부탁드려요
@@ -322,10 +307,27 @@ class question(tk.Frame):
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
             result = 10
-            
+
+        def origine():
+            sound = "./T05/music/origine.wav"
+            mixer.init()
+            mixer.music.load(sound)
+            mixer.music.play()
+        
+        def jaljaljal():
+            sound = "./T05/music/JJJ.wav"
+            mixer.init()
+            mixer.music.load(sound)
+            mixer.music.play()
+
+        def music_stop():
+            mixer.music.stop()
+
              
         if(song == 1):
             # 숫자송
+            detect()
+            origine()
             img1()
             master.after(500, img2)
             master.after(500, img3)
@@ -344,10 +346,12 @@ class question(tk.Frame):
             master.after(15000, img8)
             master.after(4000, img9)
             master.after(4000, img10)
-        
+            master.after(10000, music_stop())
         
         if(song == 2):
             # 잘잘잘
+            detect()
+            jaljaljal()
             img10()
             master.after(6000, img1)
             master.after(7000, img2)
@@ -359,6 +363,7 @@ class question(tk.Frame):
             master.after(7000, img8)
             master.after(7000, img9)
             master.after(7000, img10)
+            master.after(10000, music_stop())
 
         
 
@@ -495,16 +500,8 @@ class startgame1(tk.Frame): #Jelly bear
         
         # 버튼 배치
         
-        def origine():
-            sound = "./T05/music/origine.wav"
-            mixer.init()
-            mixer.music.load(sound)
-            mixer.music.play()
-        def music_stop():
-            mixer.music.stop()
-        
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[ master.switch_frame(question), origine] )
+                      command = lambda:[ master.switch_frame(question)] )
         btn1.image = startSong
         btn1.place(x = 150, y = 430)
 
@@ -551,24 +548,15 @@ class startgame2(tk.Frame): #Jar Jar Jar
         camcam = tk.PhotoImage(file="./T05/gui/btn/cam.png")
         
         # 버튼 배치
-        
-        
-        def jaljaljal():
-            sound = "./T05/music/JJJ.wav"
-            mixer.init()
-            mixer.music.load(sound)
-            mixer.music.play()
-        def music_stop():
-            mixer.music.stop()
-
+    
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[master.switch_frame(question), jaljaljal])              
+                      command = lambda:[master.switch_frame(question)])              
         btn1.image = startSong
         
         btn1.place(x = 150, y = 430)
         
         btn2 = Button(image=camcam, bg = '#F8FFAE',
-                      command=detect)
+                      command=lambda:[master.switch_frame(Cam)])
         btn2.image = camcam
         btn2.place(x = 250, y = 250)
 
