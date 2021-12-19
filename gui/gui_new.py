@@ -66,40 +66,42 @@ def my_score():
 
 #cv 창       
 class Cam(tk.Frame):
-    global myanswer
+    
     
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         self.width, self.height = 300,200
         self.master = master
         self.cap = cv2.VideoCapture(0)
+        self.ret, self.hand = self.cap.read()
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         self.canvas = Canvas(master, width = self.width, height = self.height)
         self.canvas.place(x=520, y=210)
         self.delay = 33
         self.update()
+        self.detect()
         
     def update(self):
-        self.ret, hand = self.cap.read()
-        hand = cv2.cvtColor(hand, cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(hand))
+        self.hand = cv2.cvtColor(self.hand, cv2.COLOR_BGR2RGB)
+        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
         self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         self.master.after(self.delay, self.update)
     
     def detect(self):
+        global myanswer
         while(self.cap.isOpened()):
             try:             
-                #ret, hand = self.cap.read()
-                hand=cv2.flip(hand,1)
-                if ret == True:
+                
+                self.hand=cv2.flip(self.hand,1)
+                if self.ret == True:
                     pass
 
                 #making the img of dimension
-                hand =hand[100:700,100:700]
+                self.hand =self.hand[100:700,100:700]
             
                 #using hsv we detect the color of skin
-                hsv = cv2.cvtColor(hand, cv2.COLOR_BGR2HSV)
+                hsv = cv2.cvtColor(self.hand, cv2.COLOR_BGR2HSV)
                 lower_skin = np.array([0, 58, 30], dtype = "uint8")
                 upper_skin = np.array([33, 255, 255], dtype = "uint8")
             
@@ -110,13 +112,13 @@ class Cam(tk.Frame):
                 kernel = np.ones((5,5),np.uint8)
                 mask = cv2.dilate(mask,kernel,iterations = 3)
                 blur = cv2.bilateralFilter(mask,9,200,200)
-                res = cv2.bitwise_and(hand,hand, mask= blur)
+                res = cv2.bitwise_and(self.hand,self.hand, mask= blur)
 
                 #convert to BGR -> GRAY 
                 hand_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
 
                 #thresholding the image
-                ret, thresh = cv2.threshold(hand_gray, 98, 255,cv2.THRESH_TRUNC)
+                self.ret, thresh = cv2.threshold(hand_gray, 98, 255,cv2.THRESH_TRUNC)
             
                 #finding contours in the threshold image
                 contours,_ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -128,11 +130,11 @@ class Cam(tk.Frame):
                 hullarea = cv2.contourArea(hull)
                 cntarea = cv2.contourArea(cnt)
                 x,y,w,h = cv2.boundingRect(hull)
-                hand = cv2.rectangle(hand,(x,y),(x+w,y+h),(0,255,0),2)
+                self.hand = cv2.rectangle(self.hand,(x,y),(x+w,y+h),(0,255,0),2)
 
                 ratio=(hullarea+cntarea)/(hullarea-cntarea)
                 print("ratio:",ratio)
-                img = cv2.drawContours(hand, hull, -2, (0,0,255), 10)
+                img = cv2.drawContours(self.hand, hull, -2, (0,0,255), 10)
             
                 if len(contours) > 0:
                     hull = cv2.convexHull(cnt, returnPoints=False)
