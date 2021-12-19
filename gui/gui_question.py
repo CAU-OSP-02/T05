@@ -80,6 +80,12 @@ class App(tk.Tk):
         self._frame = new_frame #기존 프레임 제거
         self._frame.place(x=100, y=100) #전달받은 새로운 프레임을 화면에 출력
 
+#전역변수선언 
+result = 0
+score = 0
+myanswer = None
+a = 0
+
 
 def my_score():
     global score

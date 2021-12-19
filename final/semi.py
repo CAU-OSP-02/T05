@@ -54,6 +54,8 @@ result = 0
 score = 0
 myanswer = None
 a = 0
+global song
+song = 0
 
 #함수선언
 def my_score():
@@ -81,7 +83,7 @@ class Cam(tk.Frame):
         
     def update(self):
         self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-        self.imgtk = PIL.ImageTk.PhotoImage(image = Image.fromarray(self.hand))
+        self.imgtk = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
         self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
         self.master.after(20, self.update)
     
@@ -209,6 +211,142 @@ class Cam(tk.Frame):
         cap.release()
         cv2.destroyAllWindows()
 
+class question(tk.Frame):
+    def __init__(self, master):
+           
+        tk.Frame.__init__(self, master)
+        
+        def img1():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/1.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 1   
+
+        def img2():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 2 
+
+        def img3():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/3.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 3 
+            
+            
+        def img4():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/4.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 4 
+                        
+            
+        def img5():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/5.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 5             
+
+        def img6():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/6.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 6 
+
+        def img7():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/7.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 7 
+            
+            
+        def img8():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/8.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 8 
+                        
+            
+        def img9():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/9.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 9 
+
+            
+        def img10():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "/hand pic/10.png")
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=100, y=200)
+            result = 10
+            
+             
+        if(song == 1):
+            # 숫자송
+            img1()
+            master.after(500, img2)
+            master.after(500, img3)
+            master.after(1000, img4)
+            master.after(1000, img1)
+            master.after(500, img2)
+            master.after(500, img3)
+            master.after(1000, img4)
+            master.after(1000, img1)
+            master.after(4000, img2)
+            master.after(4000, img3)
+            master.after(10000, img4)
+            master.after(4000, img5)
+            master.after(4000, img6)
+            master.after(5000, img7)
+            master.after(15000, img8)
+            master.after(4000, img9)
+            master.after(4000, img10)
+        
+        
+        if(song == 2):
+            # 잘잘잘
+            img10()
+            master.after(6000, img1)
+            master.after(7000, img2)
+            master.after(7000, img3)
+            master.after(6500, img4)
+            master.after(7000, img5)
+            master.after(7000, img6)
+            master.after(7000, img7)
+            master.after(7000, img8)
+            master.after(7000, img9)
+            master.after(7000, img10)
         
 
 pygame.mixer.init()
@@ -321,7 +459,8 @@ class MainWindow(tk.Frame):
 # 숫자송 버튼을 누르면
 class startgame1(tk.Frame): #Jelly bear
     def __init__(self, master):
-        
+        global song 
+        song = 1
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
@@ -374,7 +513,8 @@ class startgame1(tk.Frame): #Jelly bear
 class startgame2(tk.Frame): #Jar Jar Jar
     def __init__(self, master):
         tk.Frame.__init__(self, master)               
-        
+        global song 
+        song = 2
         # 배경 불러오기
         back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
