@@ -19,15 +19,15 @@ import math
 pygame.mixer.init()
 
 def musicplay():
-    pygame.mixer.music.load('bgm.mp3')
+    pygame.mixer.music.load('bgm.wav')
     pygame.mixer.music.play(loops=0)
 
 def game1musicplay():
-    pygame.mixer.music.load('origine.mp3')
+    pygame.mixer.music.load('origine.wav')
     pygame.mixer.music.play(loops=0)
 
 def game2musicplay():
-    pygame.mixer.music.load('JJJ.mp3')
+    pygame.mixer.music.load('JJJ.wav')
     pygame.mixer.music.play(loops=0)
 
 
@@ -79,7 +79,16 @@ class Cam(tk.Frame):
         self.canvas = Canvas(master, width = self.width, height = self.height)
         self.canvas.place(x=520, y=210)
         self.delay = 33
+        
+        def update(self):
+            ret, frame = self.cap.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.master.after(self.delay, self.update)
+
         self.update()
+
         while(self.cap.isOpened()):
             try:             
                 ret, hand = self.cap.read()
@@ -197,16 +206,10 @@ class Cam(tk.Frame):
             k = cv2.waitKey(250) & 0xFF
             if k == 27:
                 break
-        
-    def update(self):
-        ret, frame = self.cap.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-        self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
-        self.master.after(self.delay, self.update)
 
-
-        
+        self.cap.release()
+        cv2.destroyAllWindows()
+         
 
 pygame.mixer.init()
 
