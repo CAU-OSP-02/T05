@@ -105,7 +105,7 @@ class Cam(tk.Frame):
         
     def update(self):
         self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-        self.imgtk = PIL.ImageTk.PhotoImage(image = Image.fromarray(self.hand))
+        self.imgtk = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
         self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
         self.master.after(20, self.update)
     

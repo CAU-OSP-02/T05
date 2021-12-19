@@ -69,7 +69,6 @@ def my_score():
 #cv 창       
 class Cam(tk.Frame):
     
-    
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         self.master = master
@@ -200,6 +199,8 @@ class Cam(tk.Frame):
                     elif count_defects == 4: #Gesture 5
                             myanswer = 5
                             my_score()
+
+                    cv2.imshow('hand',hand)
 
             except:
                 pass
