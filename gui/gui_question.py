@@ -67,36 +67,6 @@ def my_score():
 
 
 
-class App(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self._frame= None
-        self.switch_frame(question)
-
-    def switch_frame(self, frame_class):
-        new_frame = frame_class(self)
-        if self._frame is not None:
-           self._frame.destroy()
-        self._frame = new_frame #기존 프레임 제거
-        self._frame.place(x=100, y=100) #전달받은 새로운 프레임을 화면에 출력
-
-#전역변수선언 
-result = 0
-score = 0
-myanswer = None
-a = 0
-
-
-def my_score():
-    global score
-    global result
-    if result == myanswer:
-        score += 100
-        result = 0
-
-        
-
-
 class question(tk.Frame):
     def __init__(self, master):
            
@@ -379,7 +349,7 @@ class startgame1(tk.Frame): #Jelly bear
             mixer.music.stop()
         
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[ master.switch_frame(question), origine] )
+                      command = lambda:[ master.switch_frame(question)])
         btn1.image = startSong
         btn1.place(x = 150, y = 430)
         
