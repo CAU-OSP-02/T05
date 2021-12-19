@@ -14,7 +14,7 @@ from tkinter import *
 from random import *
 import time
 import math
-
+from time import time
 
 pygame.mixer.init()
 
@@ -75,7 +75,7 @@ class question(tk.Frame):
         def img1():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/1.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/1.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -84,7 +84,7 @@ class question(tk.Frame):
         def img2():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/2.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -93,7 +93,7 @@ class question(tk.Frame):
         def img3():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/3.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/3.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -103,7 +103,7 @@ class question(tk.Frame):
         def img4():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/4.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/4.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -113,7 +113,7 @@ class question(tk.Frame):
         def img5():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/5.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/5.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -122,7 +122,7 @@ class question(tk.Frame):
         def img6():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/6.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/6.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -131,7 +131,7 @@ class question(tk.Frame):
         def img7():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/7.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/7.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -141,7 +141,7 @@ class question(tk.Frame):
         def img8():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/8.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/8.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -151,7 +151,7 @@ class question(tk.Frame):
         def img9():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/9.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/9.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -161,7 +161,7 @@ class question(tk.Frame):
         def img10():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/10.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/10.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=100, y=200)
@@ -223,7 +223,7 @@ class MainWindow(tk.Frame):
         tk.Frame.__init__(self, master)
         
         # 배경 불러오기
-        back1 = tk.PhotoImage(file="./gui/page/background.png")
+        back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
         # 배경 배치
         lbl_b1 = Label(image = back1)
@@ -231,15 +231,15 @@ class MainWindow(tk.Frame):
         lbl_b1.place(x = 0, y = 0)
         
         #디자인 용 그림 불러오기
-        design1=tk.PhotoImage(file="./background design/1.png")
-        design2=tk.PhotoImage(file="./background design/2.png")
-        design3=tk.PhotoImage(file="./background design/3.png")
-        design4=tk.PhotoImage(file="./background design/4.png")
-        design5=tk.PhotoImage(file="./background design/5.png")
-        design6=tk.PhotoImage(file="./background design/6.png")
-        design7=tk.PhotoImage(file="./background design/7.png")
-        design8=tk.PhotoImage(file="./background design/8.png")
-        design9=tk.PhotoImage(file="./background design/9.png")
+        design1=tk.PhotoImage(file="./T05/gui/background design/1.png")
+        design2=tk.PhotoImage(file="./T05/gui/background design/2.png")
+        design3=tk.PhotoImage(file="./T05/gui/background design/3.png")
+        design4=tk.PhotoImage(file="./T05/gui/background design/4.png")
+        design5=tk.PhotoImage(file="./T05/gui/background design/5.png")
+        design6=tk.PhotoImage(file="./T05/gui/background design/6.png")
+        design7=tk.PhotoImage(file="./T05/gui/background design/7.png")
+        design8=tk.PhotoImage(file="./T05/gui/background design/8.png")
+        design9=tk.PhotoImage(file="./T05/gui/background design/9.png")
         
         #디자인 용 그림배치
         lbl1 = Label(image=design1, bg = '#F8FFAE')
@@ -349,7 +349,7 @@ class startgame1(tk.Frame): #Jelly bear
             mixer.music.stop()
         
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[ master.switch_frame(question)])
+                      command = lambda:[ master.switch_frame(question),origine()])
         btn1.image = startSong
         btn1.place(x = 150, y = 430)
         
@@ -402,7 +402,7 @@ class startgame2(tk.Frame): #Jar Jar Jar
             mixer.music.stop()
 
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[master.switch_frame(question), jaljaljal])
+                      command = lambda:[master.switch_frame(question), jaljaljal()])
                                        
                       
         btn1.image = startSong
