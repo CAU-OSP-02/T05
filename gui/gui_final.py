@@ -1,20 +1,13 @@
+from tkinter import *
 import tkinter as tk
 import pygame
-import sys
 import cv2
-import mediapipe as mp
 import numpy as np
 import threading
-import datetime
-import os
-import PIL.Image, PIL.ImageTk
 from pygame import mixer
 import PIL.Image, PIL.ImageTk
-from tkinter import *
-from random import *
 import time
 import math
-from time import time
 
 pygame.mixer.init()
 
@@ -169,7 +162,7 @@ class question(tk.Frame):
         def imgFollow():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "./T05/hand pic/간주중.png")#######사진속 손가락을 보고~ 경로 추가 부탁드려요
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/간주중.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=200, y=240)
@@ -177,7 +170,7 @@ class question(tk.Frame):
         def imgGood():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "./T05/hand pic/참 잘했어요.png")#######참잘했어요 경로 추가 부탁드려요
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/참 잘했어요.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
             imgLabel.place(x=330, y=170)
@@ -269,7 +262,7 @@ def bgm():
     mixer.music.play()
     
 def good():
-    bgm = "./T05/music/goodsound.wav"######################경로 추가해주세요 뿅소리
+    bgm = "./T05/music/goodsound.wav"
     mixer.init()
     mixer.music.load(bgm)
     mixer.music.play()
@@ -533,7 +526,7 @@ class Help(tk.Frame):
         
         # 텍스트 불러오기
         text1=tk.PhotoImage(file="./T05/gui/text/help.png")
-        text2=tk.PhotoImage(file="./T05/hand pic/도움말.png")##############도움말 글 경로 부탁드려요
+        text2=tk.PhotoImage(file="./T05/hand pic/도움말.png")
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
