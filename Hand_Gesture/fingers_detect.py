@@ -106,6 +106,10 @@ while(cap.isOpened()):
         ratio=(hullarea+cntarea)/(hullarea-cntarea)
         print("ratio:",ratio)
         img = cv2.drawContours(hand, hull, -2, (0,0,255), 10)
+
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(hand, 'score :' , (50,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
+        cv2.putText(hand, str(score), (300,50), font, 2, (255,255,255), 4, cv2.LINE_AA)
     
         if len(contours) > 0:
             hull = cv2.convexHull(cnt, returnPoints=False)
