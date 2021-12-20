@@ -14,12 +14,12 @@ from tkinter import *
 from random import *
 import time
 import math
-
+from time import time
 
 pygame.mixer.init()
 
 def musicplay():
-    pygame.mixer.music.load('bgm.wav')
+    pygame.mixer.music.load('bgmnew.wav')
     pygame.mixer.music.play(loops=0)
 
 def game1musicplay():
@@ -54,7 +54,6 @@ result = 0
 score = 0
 myanswer = None
 a = 0
-global song
 song = 0
 
 #함수선언
@@ -67,175 +66,6 @@ def my_score():
 
 
 
-class App(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self._frame= None
-        self.switch_frame(question)
-
-    def switch_frame(self, frame_class):
-        new_frame = frame_class(self)
-        if self._frame is not None:
-           self._frame.destroy()
-        self._frame = new_frame #기존 프레임 제거
-        self._frame.place(x=100, y=100) #전달받은 새로운 프레임을 화면에 출력
-
-
-def my_score():
-    global score
-    global result
-    if result == myanswer:
-        score += 100
-        result = 0
-
-#cv 창       
-class Cam(tk.Frame):
-    
-    
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        self.master = master
-        self.canvas = Canvas(master, width = 300, height = 200)
-        self.canvas.place(x=520, y=210)
-        self.cap = cv2.VideoCapture(0)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 300)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
-        self.update()
-        self.detect()
-        
-    def update(self):
-        self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
-        self.imgtk = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.hand))
-        self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
-        self.master.after(20, self.update)
-    
-    def detect(self):
-        global myanswer
-        cap = cv2.VideoCapture(0)
-        while(cap.isOpened()):
-            try:             
-                ret, hand = cap.read()
-                hand=cv2.flip(hand,1)
-                if ret == True:
-                    pass
-
-                #making the img of dimension
-                hand =hand[100:700,100:700]
-            
-                #using hsv we detect the color of skin
-                hsv = cv2.cvtColor(hand, cv2.COLOR_BGR2HSV)
-                lower_skin = np.array([0, 58, 30], dtype = "uint8")
-                upper_skin = np.array([33, 255, 255], dtype = "uint8")
-            
-                #applying mask to extract skin color object from the img
-                mask = cv2.inRange(hsv, lower_skin, upper_skin)
-
-                #now we dilate our skin color object to remove black spots or noise from it
-                kernel = np.ones((5,5),np.uint8)
-                mask = cv2.dilate(mask,kernel,iterations = 3)
-                blur = cv2.bilateralFilter(mask,9,200,200)
-                res = cv2.bitwise_and(hand,hand, mask= blur)
-
-                #convert to BGR -> GRAY 
-                hand_gray = cv2.cvtColor(res,cv2.COLOR_BGR2GRAY)
-
-                #thresholding the image
-                ret, thresh = cv2.threshold(hand_gray, 98, 255,cv2.THRESH_TRUNC)
-            
-                #finding contours in the threshold image
-                contours,_ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-
-                #selecting the contour of max area 
-                cnt = max(contours, key = lambda x: cv2.contourArea(x))
-            
-                hull = cv2.convexHull(cnt)
-                hullarea = cv2.contourArea(hull)
-                cntarea = cv2.contourArea(cnt)
-                x,y,w,h = cv2.boundingRect(hull)
-                hand = cv2.rectangle(hand,(x,y),(x+w,y+h),(0,255,0),2)
-
-                ratio=(hullarea+cntarea)/(hullarea-cntarea)
-                print("ratio:",ratio)
-                img = cv2.drawContours(hand, hull, -2, (0,0,255), 10)
-            
-                if len(contours) > 0:
-                    hull = cv2.convexHull(cnt, returnPoints=False)
-                    defects = cv2.convexityDefects(cnt, hull)
-                    count_defects = 0
-                                
-                    for i in range(defects.shape[0]):
-                        s,e,f,d = defects[i,0]
-                        start = tuple(cnt[s][0])
-                        end = tuple(cnt[e][0])
-                        far = tuple(cnt[f][0])
-                        cv2.circle(img,far,5,[0,0,255],-1)
-                        cv2.line(img,start,end,[255,0,0],2)
-                        a = math.sqrt((end[0] - start[0])**2 + (end[1] - start[1])**2)
-                        b = math.sqrt((far[0] - start[0])**2 + (far[1] - start[1])**2)
-                        c = math.sqrt((end[0] - far[0])**2 + (end[1] - far[1])**2)
-                        #find the angles between the sides of triangle
-                        angle = math.acos((b**2 + c**2 - a**2)/(2*b*c)) * 57.295
-                        if angle <= 90:
-                            count_defects += 1
-                            print("angle:",count_defects)
-
-                    # hand gestures and display the result            
-                    if count_defects == 0 :
-                        if 9<ratio<11: #Gesture 1
-                            myanswer = 1
-                            my_score()
-                            
-                        elif 5<ratio<12: #Gesture 6
-                            myanswer = 6
-                            my_score()
-
-                        elif 12<ratio<15: #Gesture 0
-                            myanswer = 10
-                            my_score()
-
-                        elif 15 <ratio <30: #Gesture 9
-                            myanswer = 9
-                            my_score()
-
-                    elif count_defects == 1 :
-                        if 7<ratio<10: #Gesture 2
-                            myanswer = 2
-                            my_score()
-                                
-                        elif 4<ratio <8 : #Gesture 7
-                            myanswer = 7
-                            my_score()
-
-                    elif count_defects == 2:
-                        if ratio<10: #Gesture 8
-                            myanswer = 8
-                            my_score()
-
-                        elif 6<ratio<11: #Gesture 3
-                            myanswer = 3
-                            my_score()
-                
-                    elif count_defects == 3: #Gesture 4
-                            myanswer = 4
-                            my_score()
-
-                    elif count_defects == 4: #Gesture 5
-                            myanswer = 5
-                            my_score()
-
-            except:
-                pass
-
-            k = cv2.waitKey(250) & 0xFF
-            if k == 27:
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-
-        
-
-
 class question(tk.Frame):
     def __init__(self, master):
            
@@ -244,155 +74,219 @@ class question(tk.Frame):
         def img1():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/1.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/1.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 1   
 
         def img2():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/2.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 2 
 
         def img3():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/3.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/3.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 3 
             
             
         def img4():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/4.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/4.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 4 
                         
             
         def img5():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/5.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/5.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 5             
 
         def img6():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/6.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/6.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 6 
 
         def img7():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/7.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/7.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 7 
             
             
         def img8():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/8.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/8.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 8 
                         
             
         def img9():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/9.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/9.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 9 
 
             
         def img10():
             global result
             start = time()
-            imgObj = tk.PhotoImage(file = "/hand pic/10.png")
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/10.png")
             imgLabel = Label(image=imgObj)
             imgLabel.image = imgObj
-            imgLabel.place(x=100, y=200)
+            imgLabel.place(x=200, y=240)
             result = 10
+
+        def imgFollow():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/간주중.png")#######사진속 손가락을 보고~ 경로 추가 부탁드려요
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=200, y=240)
+           
+        def imgGood():
+            global result
+            start = time()
+            imgObj = tk.PhotoImage(file = "./T05/hand pic/참 잘했어요.png")#######참잘했어요 경로 추가 부탁드려요
+            imgLabel = Label(image=imgObj)
+            imgLabel.image = imgObj
+            imgLabel.place(x=330, y=170)
+
+
+        def update(self):
+            self.hand = cv2.cvtColor(self.cap.read()[1], cv2.COLOR_BGR2RGB)
+            self.imgtk = PIL.ImageTk.PhotoImage(image = Image.fromarray(self.hand))
+            self.canvas.create_image(0, 0, image = self.imgtk, anchor = NW)
+            self.master.after(20, self.update) 
             
+        
+        self.master = master
+        self.canvas = Canvas(master, width = 300, height = 200)
+        self.canvas.place(x=520, y=210)
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 300)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
+        self.update()
+       
              
-        if(song == 1):
+        while(song == 1):
             # 숫자송
-            img1()
-            master.after(500, img2)
-            master.after(500, img3)
-            master.after(1000, img4)
-            master.after(1000, img1)
-            master.after(500, img2)
-            master.after(500, img3)
-            master.after(1000, img4)
-            master.after(1000, img1)
-            master.after(4000, img2)
-            master.after(4000, img3)
-            master.after(10000, img4)
-            master.after(4000, img5)
-            master.after(4000, img6)
-            master.after(5000, img7)
-            master.after(15000, img8)
-            master.after(4000, img9)
-            master.after(4000, img10)
+            a=2000
+            master.after(a+500, img1)
+            master.after(a+1500, img2)
+            master.after(a+2500, img3)
+            master.after(a+3000, img4)
+            master.after(a+4000, img1)
+            master.after(a+5000, img2)
+            master.after(a+6000, img3)
+            master.after(a+7000, img4)
+            master.after(a+8000, img1)
+            master.after(a+10500, img2)
+            master.after(a+14500, img3)
+            master.after(a+20500, img4)
+            master.after(a+24500, img5)
+            master.after(a+28500, img6)
+            master.after(a+33500, img7)
+            master.after(a+48500, img8)
+            master.after(a+51500, img9)
+            master.after(a+55500, img10)
+            master.after(a+70000, imgGood)
+            master.after(a+70000, good)
+            break
         
         
-        if(song == 2):
+        while(song == 2):
             # 잘잘잘
-            img10()
-            master.after(6000, img1)
-            master.after(7000, img2)
-            master.after(7000, img3)
-            master.after(6500, img4)
-            master.after(7000, img5)
-            master.after(7000, img6)
-            master.after(7000, img7)
-            master.after(7000, img8)
-            master.after(7000, img9)
-            master.after(7000, img10)
+            b=500
+            master.after(b, imgFollow)
+            master.after(b+6000, img1)
+            master.after(b+13000, img2)
+            master.after(b+20000, img3)
+            master.after(b+26500, img4)
+            master.after(b+33500, img5)
+            master.after(b+40500, img6)
+            master.after(b+47500, img7)
+            master.after(b+54500, img8)
+            master.after(b+61500, img9)
+            master.after(b+68500, img10)
+            master.after(b+80000, imgGood)
+            master.after(b+80000, good)
+
+            break
 
         
 
 pygame.mixer.init()
 
 def musicplay():
-     pygame.mixer.music.load('bgm.mp3')
+     pygame.mixer.music.load('./T05/music/bgmnew.wav')
      pygame.mixer.music.play(loops=0)
 
 
 def musicstop():
     pygame.mixer.music.stop()
 
+def sound_effect():
+    sound = "./T05/music/Sound.wav"
+    mixer.init()
+    mixer.music.load(sound)
+    mixer.music.play()
+    
+def bgm():
+    bgm = "./T05/music/bgmnew.wav"
+    mixer.init()
+    mixer.music.load(bgm)
+    mixer.music.play()
+    
+def good():
+    bgm = "./T05/music/goodsound.wav"######################경로 추가해주세요 뿅소리
+    mixer.init()
+    mixer.music.load(bgm)
+    mixer.music.play()
+   
+    
+def bgm_stop():
+    mixer.music.stop()  
+
 
 class MainWindow(tk.Frame):
     def __init__(self, master):
        
         tk.Frame.__init__(self, master)
-        
+        global song
+        song = 0
         # 배경 불러오기
-        back1 = tk.PhotoImage(file="./gui/page/background.png")
+        back1 = tk.PhotoImage(file="./T05/gui/page/background.png")
 
         # 배경 배치
         lbl_b1 = Label(image = back1)
@@ -400,15 +294,15 @@ class MainWindow(tk.Frame):
         lbl_b1.place(x = 0, y = 0)
         
         #디자인 용 그림 불러오기
-        design1=tk.PhotoImage(file="./background design/1.png")
-        design2=tk.PhotoImage(file="./background design/2.png")
-        design3=tk.PhotoImage(file="./background design/3.png")
-        design4=tk.PhotoImage(file="./background design/4.png")
-        design5=tk.PhotoImage(file="./background design/5.png")
-        design6=tk.PhotoImage(file="./background design/6.png")
-        design7=tk.PhotoImage(file="./background design/7.png")
-        design8=tk.PhotoImage(file="./background design/8.png")
-        design9=tk.PhotoImage(file="./background design/9.png")
+        design1=tk.PhotoImage(file="./T05/gui/background design/1.png")
+        design2=tk.PhotoImage(file="./T05/gui/background design/2.png")
+        design3=tk.PhotoImage(file="./T05/gui/background design/3.png")
+        design4=tk.PhotoImage(file="./T05/gui/background design/4.png")
+        design5=tk.PhotoImage(file="./T05/gui/background design/5.png")
+        design6=tk.PhotoImage(file="./T05/gui/background design/6.png")
+        design7=tk.PhotoImage(file="./T05/gui/background design/7.png")
+        design8=tk.PhotoImage(file="./T05/gui/background design/8.png")
+        design9=tk.PhotoImage(file="./T05/gui/background design/9.png")
         
         #디자인 용 그림배치
         lbl1 = Label(image=design1, bg = '#F8FFAE')
@@ -459,26 +353,25 @@ class MainWindow(tk.Frame):
         
          
         btn1 = Button(image=start, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Start))
+                      command=lambda: [master.switch_frame(Start), sound_effect()])
         btn1.image = start
         btn1.place(x = 320, y = 230)
         btn2 = Button(image=help, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Help))
+                      command=lambda: [master.switch_frame(Help), sound_effect()])
         btn2.image = help
         btn2.place(x = 320, y = 330)
         btn3 = Button(image=setting, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(Setting))
+                      command=lambda: [sound_effect(), master.switch_frame(Setting)])
         btn3.image = setting
         btn3.place(x = 320, y = 430)
         btn4 = Button(image=quit, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(quit))
+                      command=lambda: [sound_effect(),master.switch_frame(quit)])
         btn4.image = quit
         btn4.place(x = 320, y = 530)
                    
         
         def quit(self):
             self.destroy()
-
 
 
 # 숫자송 버튼을 누르면
@@ -518,20 +411,16 @@ class startgame1(tk.Frame): #Jelly bear
             mixer.music.stop()
         
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[ master.switch_frame(question), origine] )
+                      command = lambda:[ master.switch_frame(question),origine()])
         btn1.image = startSong
         btn1.place(x = 150, y = 430)
         
         
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: [master.switch_frame(Start), music_stop()])
+                      command=lambda: [master.switch_frame(MainWindow), sound_effect(), music_stop()])
         btn3.image = back
         btn3.place(x = 520, y = 430)
         
- 
-
-
-
 
 # 잘잘잘 숫자송 버튼을 누르면
 class startgame2(tk.Frame): #Jar Jar Jar
@@ -553,15 +442,13 @@ class startgame2(tk.Frame): #Jar Jar Jar
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
         lbl_t1.image = text1
-        lbl_t1.place(x=90, y=70)
+        lbl_t1.place(x=100, y=40)
             
         # 버튼 불러오기
         startSong = tk.PhotoImage(file="./T05/gui/btn/start song.png")
         back = tk.PhotoImage(file="./T05/gui/btn/back.png")
         
         # 버튼 배치
-        
-        
         def jaljaljal():
             sound = "./T05/music/JJJ.wav"
             mixer.init()
@@ -571,15 +458,14 @@ class startgame2(tk.Frame): #Jar Jar Jar
             mixer.music.stop()
 
         btn1 = Button(image=startSong, bg = '#F8FFAE',
-                      command = lambda:[master.switch_frame(question), jaljaljal])
+                      command = lambda:[master.switch_frame(question),jaljaljal()])
                                        
                       
         btn1.image = startSong
         btn1.place(x = 150, y = 430)
         
-        
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: [master.switch_frame(Start), music_stop()])
+                      command=lambda: [ master.switch_frame(MainWindow), music_stop()])
         btn3.image = back
         btn3.place(x = 520, y = 430)
 
@@ -588,6 +474,8 @@ class startgame2(tk.Frame): #Jar Jar Jar
 class Start(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
+        global song 
+        song = 0
         
         # 배경 불러오기
         back2 = tk.PhotoImage(file="./T05/gui/page/background2.png")
@@ -615,15 +503,15 @@ class Start(tk.Frame):
         
          
         btn1 = Button(image=Origine, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(startgame1))
+                      command=lambda: [bgm_stop(),master.switch_frame(startgame1),sound_effect()])
         btn1.image = Origine
         btn1.place(x = 320, y = 230)
         btn2 = Button(image=JarJarJar, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(startgame2))
+                      command=lambda: [bgm_stop(),master.switch_frame(startgame2),sound_effect()])
         btn2.image = JarJarJar
         btn2.place(x = 320, y = 330)
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(MainWindow))
+                      command=lambda: [master.switch_frame(MainWindow),sound_effect()])
         btn3.image = back
         btn3.place(x = 320, y = 430)
         
@@ -645,20 +533,25 @@ class Help(tk.Frame):
         
         # 텍스트 불러오기
         text1=tk.PhotoImage(file="./T05/gui/text/help.png")
+        text2=tk.PhotoImage(file="./T05/hand pic/도움말.png")##############도움말 글 경로 부탁드려요
         
         # 텍스트 배치
         lbl_t1 = Label(image = text1, bg = '#F8FFAE')
         lbl_t1.image = text1
         lbl_t1.place(x=350, y=70) 
         
+        lbl_t2 = Label(image = text2, bg = '#F8FFAE')
+        lbl_t2.image = text2
+        lbl_t2.place(x=30, y=210)
+        
         # 버튼 불러오기
         back = tk.PhotoImage(file="./T05/gui/btn/back.png")
     
         # 버튼 배치
         btn1 = Button(image=back, bg = '#F8FFAE',
-                      command=lambda: master.switch_frame(MainWindow))
+                      command=lambda: [master.switch_frame(MainWindow), sound_effect()])
         btn1.image = back
-        btn1.place(x = 320, y = 430)
+        btn1.place(x = 320, y = 480)
         
                
         
@@ -688,8 +581,7 @@ class Setting(tk.Frame):
         back = tk.PhotoImage(file = "./T05/gui/btn/back.png")
         
         
-        # 버튼 배치
-        
+        # 버튼 배치   
         btn1 = Button(image=on, bg = '#F8FFAE',
                       command = musicplay)
         btn1.image = on
@@ -699,7 +591,7 @@ class Setting(tk.Frame):
         btn2.image = off
         btn2.place(x = 495, y = 300)
         btn3 = Button(image=back, bg = '#F8FFAE',
-                      command = lambda: master.switch_frame(MainWindow))
+                      command = lambda: [master.switch_frame(MainWindow),bgm_stop()])
         btn3.image = back
         btn3.place(x = 320, y = 430)
 
