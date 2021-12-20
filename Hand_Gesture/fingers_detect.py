@@ -13,10 +13,9 @@ def my_score():
     global score
     global result
     if result == myanswer:
-        score += 100
         result = 0
-
-
+        score += 100
+        
 def img1():
     global result
     result = 1
